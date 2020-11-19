@@ -13,8 +13,8 @@
 describe("test lead status", () => {
     test("should update status to open", async () => {
         // 1. If Partner initializes Lead, then Lead is considered Open.
-        //Create Referral Partner and invoke add-lead method.
-        //The add-lead method would return the lead object.
+        //TODO: Create Referral Partner and invoke create lead method.
+        //The create lead method would return the lead object.
         //We need to check that the status of the lead object is open.
         const lead = { "status": "open" }
         const status = lead.status
