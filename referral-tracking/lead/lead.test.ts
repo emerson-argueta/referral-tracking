@@ -12,14 +12,17 @@
 // describe creates a block that groups together several related tests
 describe("test lead status", () => {
     test("should update status to open", async () => {
-        // 1. If Partner initializes Lead, then Lead is considered Open
+        // 1. If Partner initializes Lead, then Lead is considered Open.
+        //Create Referral Partner and invoke add-lead method.
+        //The add-lead method would return the lead object.
+        //We need to check that the status of the lead object is open.
         const lead = { "status": "open" }
         const status = lead.status
 
         expect(status).toBe("open");
     });
     test("should update status to scheduled", async () => {
-        // 2. If Owner accepts the initialized Lead, Lead status is considered Scheduled
+        // 2. If Owner accepts the initialized Lead, Lead status is considered Scheduled.
         const lead = { "status": "scheduled" }
         const status = lead.status
 
@@ -32,7 +35,7 @@ describe("test lead status", () => {
 
         expect(status).toBe("proposal-sent");
     });
-    test("should update status to list", async () => {
+    test("should update status to lost", async () => {
         // 4. If Customer responds NO to email, then Lead is considered Lost
         const lead = { "status": "lost" }
         const status = lead.status
