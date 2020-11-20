@@ -21,9 +21,9 @@
         ],
     },
     "include": [
-        "referral-tracking/**/*"
+        "src/**/*"
     ],
     "exclude": [
-        "referral-tracking/**/*.spec.ts"
+        "src/**/*.spec.ts"
     ]
 }

@@ -1,8 +1,8 @@
 {
     "watch": [
-        "referral-tracking"
+        "src"
     ],
     "ext": ".ts,.js",
     "ignore": [],
-    "exec": "ts-node ./referral-tracking/index.ts"
+    "exec": "ts-node ./src/index.ts"
 }
