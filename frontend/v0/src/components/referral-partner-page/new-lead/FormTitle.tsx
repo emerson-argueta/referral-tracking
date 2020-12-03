@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
-export const FormTitle = () => {
+interface FormTitleProps {
+    referralOwnerName: string
+}
+
+
+export const FormTitle = (props:FormTitleProps) => {
+    const referralOwnerName = props.referralOwnerName
+    
+    
     return (
-        <div>
+        <Fragment>
 
-        </div>
+            <h1>New lead for {referralOwnerName}</h1>
+            
+        </Fragment>
     )
 }

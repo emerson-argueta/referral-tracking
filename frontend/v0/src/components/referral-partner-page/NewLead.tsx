@@ -2,10 +2,17 @@ import React from 'react'
 import { FormTitle } from './new-lead/FormTitle'
 import { NewLeadForm } from './new-lead/NewLeadForm'
 
-export const NewLead = () => {
+interface NewLeadProps {
+    referralOwnerName : string 
+}
+
+
+export const NewLead = (props:NewLeadProps) => {
+    const name = props.referralOwnerName
+    
     return (
         <div>
-            <FormTitle />
+            <FormTitle referralOwnerName={name}  />
             <NewLeadForm />
         </div>
     )
