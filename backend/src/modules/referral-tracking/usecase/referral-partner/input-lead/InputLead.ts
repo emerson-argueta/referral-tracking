@@ -72,6 +72,7 @@ export class InputLead {
             dateTime: new Date(),
             project: project
         }
+
         try {
             const leadExistsProps = {
                 referralPartnerId: referralPartner.id,
@@ -79,13 +80,13 @@ export class InputLead {
                 clientId: client.id,
                 projectId: project.props.id
             }
-            const leadExists = this.leadRepo.findLead()
+            const leadExists = this.leadRepo.findLead(leadExistsProps)
+
+            return InputLeadErrors.InputLeadExists
         } catch (error) {
-
+            const lead = Lead.create(leadProps)
+            await this.leadRepo.save(lead)
         }
-        const lead = Lead.create(leadProps)
-
-        await this.leadRepo.save(lead)
 
         return 'success'
     }

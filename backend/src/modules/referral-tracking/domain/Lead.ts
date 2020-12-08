@@ -4,9 +4,9 @@ import { ReferralOwner } from "./ReferralOwner"
 import { ReferralPartner } from "./ReferralPartner"
 
 export interface LeadProps {
-    leadId?: string;
-    ReferralPartner: ReferralPartner;
-    ReferralOwner: ReferralOwner;
+    id?: string;
+    referralPartner: ReferralPartner;
+    referralOwner: ReferralOwner;
     client: Client;
     dateTime: Date;
     project: Project;
