@@ -1,5 +1,5 @@
-interface ProjectProps {
-    customerId: string;
+export interface ProjectProps {
+    clientId: string;
     estimate: string;
     title: string;
 }

@@ -1,10 +1,13 @@
+import { Client } from "./Client"
 import { Project } from "./Project"
+import { ReferralOwner } from "./ReferralOwner"
+import { ReferralPartner } from "./ReferralPartner"
 
-interface LeadProps {
-    leadId: string;
-    referralPartnerId: string;
-    referralOwnerId: string;
-    customerId: string;
+export interface LeadProps {
+    leadId?: string;
+    ReferralPartner: ReferralPartner;
+    ReferralOwner: ReferralOwner;
+    client: Client;
     dateTime: Date;
     project: Project;
 }
