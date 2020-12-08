@@ -44,16 +44,5 @@ export class InputLeadController {
             }
         }
 
-
-        switch (result) {
-            case value:
-
-                break;
-
-            default:
-                break;
-        }
-
-
     }
 }
