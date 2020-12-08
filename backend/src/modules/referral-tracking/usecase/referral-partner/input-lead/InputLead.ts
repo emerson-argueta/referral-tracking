@@ -1,14 +1,22 @@
+import { idText } from "typescript";
 import { Client, ClientProps } from "../../../domain/Client";
 import { Lead, LeadProps } from "../../../domain/Lead";
 import { Project, ProjectProps } from "../../../domain/Project";
+import { ReferralOwner } from "../../../domain/ReferralOwner";
+import { ReferralPartner } from "../../../domain/ReferralPartner";
 import { InputLeadDTO } from "./InputLeadDTO";
+import { InputLeadErrors } from "./InputLeadErrors";
+
+type Response = string |
+    typeof InputLeadErrors.InputLeadExists |
+    typeof InputLeadErrors.InputLeadInvalid
 
 export class InputLead {
     referralPartnerRepo: any
     clientRepo: any
     leadRepo: any
 
-    async execute(request: InputLeadDTO): Promise<string> {
+    async execute(request: InputLeadDTO): Promise<Response> {
         const {
             referralPartnerId,
             referralOwnerId,
@@ -18,9 +26,9 @@ export class InputLead {
             projectEstimate
         } = request
 
-        let referralPartner: any
-        let referralOwner: any
-        let client: any
+        let referralPartner: ReferralPartner
+        let referralOwner: ReferralOwner
+        let client: Client
 
         try {
             referralPartner = await this.referralPartnerRepo.getReferralPartnerById(referralPartnerId)
@@ -58,13 +66,23 @@ export class InputLead {
         const project = Project.create(projectProps)
 
         const leadProps: LeadProps = {
-            ReferralPartner: referralPartner,
-            ReferralOwner: referralOwner,
+            referralPartner: referralPartner,
+            referralOwner: referralOwner,
             client: client,
             dateTime: new Date(),
             project: project
         }
+        try {
+            const leadExistsProps = {
+                referralPartnerId: referralPartner.id,
+                referralOwnerId: referralOwner.id,
+                clientId: client.id,
+                projectId: project.props.id
+            }
+            const leadExists = this.leadRepo.findLead()
+        } catch (error) {
 
+        }
         const lead = Lead.create(leadProps)
 
         await this.leadRepo.save(lead)

@@ -1,14 +1,14 @@
 
 interface ReferralOwnerProps {
-    userId: string;
+    id: string;
     username: string;
 }
 
 export class ReferralOwner {
     props: ReferralOwnerProps
 
-    get userId(): string {
-        return this.props.userId
+    get id(): string {
+        return this.props.id
     }
 
     get username(): string {

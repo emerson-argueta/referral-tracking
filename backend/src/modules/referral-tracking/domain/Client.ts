@@ -1,5 +1,5 @@
 export interface ClientProps {
-    clientId?: string;
+    id?: string;
     name: string;
     email: string
 }
@@ -10,12 +10,15 @@ export class Client {
     props: ClientProps
 
 
+    get id(): string {
+        return this.props.id || ""
+    }
     get email(): string {
         return this.props.email
     }
 
 
-    name(): string {
+    get name(): string {
         return this.props.name
     }
 

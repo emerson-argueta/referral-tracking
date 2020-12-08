@@ -1,4 +1,5 @@
 export interface ProjectProps {
+    id?: string,
     clientId: string;
     estimate: string;
     title: string;
