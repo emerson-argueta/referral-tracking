@@ -3,7 +3,7 @@ import { Sequelize, DataTypes } from "sequelize/types";
 export default (sequelize: Sequelize, DataTypes) => {
     // When timestamps are enabled in options, createdAt and updatedAt fields
     // are created automatically for every model
-    const Client = sequelize.define('client', {
+    const Referral_owner = sequelize.define('referral_owner', {
         referral_owner_id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -14,8 +14,8 @@ export default (sequelize: Sequelize, DataTypes) => {
             type: DataTypes.UUID,
             allowNull: false,
             references: {
-                model: 'client',
-                key: 'client_name'
+                model: 'referral_owner',
+                key: 'referral_owner_username'
             },
             onDelete: 'cascade',
             onUpdate: 'cascade',
@@ -23,14 +23,14 @@ export default (sequelize: Sequelize, DataTypes) => {
     }, {
         timestamps: true,
         underscored: true,
-        tableName: 'clients'
+        tableName: 'referral-owner'
     });
     //Below needs to be changed to match the schema we create within Postgres.
-    Client.associate = (models) => {
-        Client.belongsTo(models.Member, { foreignKey: 'member_id', targetKey: 'member_id', as: 'Member' })
-        Client.belongsTo(models.Post, { foreignKey: 'post_id', targetKey: 'post_id', as: 'Post' })
-        Client.hasMany(models.leadVote, { foreignKey: 'client_id', as: 'leadVotes' })
+    Referral_owner.associate = (models) => {
+        Referral_owner.belongsTo(models.Member, { foreignKey: 'member_id', targetKey: 'member_id', as: 'Member' })
+        Referral_owner.belongsTo(models.Post, { foreignKey: 'post_id', targetKey: 'post_id', as: 'Post' })
+        Referral_owner.hasMany(models.leadVote, { foreignKey: 'client_id', as: 'leadVotes' })
     }
 
-    return Client;
+    return Referral_owner;
 };
