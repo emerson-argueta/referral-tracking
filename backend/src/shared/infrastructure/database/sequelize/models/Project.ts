@@ -1,3 +1,5 @@
+import { Sequelize, DataTypes } from "sequelize/types";
+
 export default (sequelize, DataTypes) => {
     const Project = sequelize.define('project', {
         project_id: {
