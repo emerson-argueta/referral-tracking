@@ -4,6 +4,7 @@ import { Lead, LeadProps } from "../../../domain/Lead";
 import { Project, ProjectProps } from "../../../domain/Project";
 import { ReferralOwner } from "../../../domain/ReferralOwner";
 import { ReferralPartner } from "../../../domain/ReferralPartner";
+import { IUniqueLead } from "../../../repo/UniqueLead";
 import { InputLeadDTO } from "./InputLeadDTO";
 import { InputLeadErrors } from "./InputLeadErrors";
 
@@ -74,11 +75,11 @@ export class InputLead {
         }
 
         try {
-            const leadExistsProps = {
+            const leadExistsProps: IUniqueLead = {
                 referralPartnerId: referralPartner.id,
                 referralOwnerId: referralOwner.id,
                 clientId: client.id,
-                projectId: project.props.id
+                projectId: project.id
             }
             const leadExists = this.leadRepo.findLead(leadExistsProps)
 

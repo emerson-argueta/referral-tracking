@@ -8,6 +8,10 @@ export interface ProjectProps {
 export class Project {
     props: ProjectProps
 
+    get id(): string {
+        return this.props.id || ""
+    }
+
     private constructor(props: ProjectProps) {
         this.props = props
     }
