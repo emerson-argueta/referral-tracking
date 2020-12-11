@@ -59,7 +59,7 @@ export class ClientRepo implements IClientRepo {
         }
 
     }
-    public async exists(clientId: ClientId): Promise<boolean> {
+    private async exists(clientId: ClientId): Promise<boolean> {
         const ClientModel = this.models.Client as any;
         const baseQuery = this.createBaseQuery();
         baseQuery.where['id'] = clientId;
@@ -67,7 +67,7 @@ export class ClientRepo implements IClientRepo {
         const found = !!client === true;
         return found;
     }
-    public delete(clientId: ClientId): Promise<void> {
+    private delete(clientId: ClientId): Promise<void> {
         const ClientModel = this.models.Client as any;
         return ClientModel.destroy({ where: { id: clientId } });
     }

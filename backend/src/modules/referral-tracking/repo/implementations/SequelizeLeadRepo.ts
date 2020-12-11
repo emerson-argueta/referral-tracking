@@ -61,7 +61,7 @@ export class LeadRepo implements ILeadRepo {
         }
 
     }
-    public async exists(leadId: LeadId): Promise<boolean> {
+    private async exists(leadId: LeadId): Promise<boolean> {
         const LeadModel = this.models.Lead;
         const baseQuery = this.createBaseQuery();
         baseQuery.where['id'] = leadId;
@@ -69,7 +69,7 @@ export class LeadRepo implements ILeadRepo {
         const found = !!lead === true;
         return found;
     }
-    public delete(leadId: LeadId): Promise<void> {
+    private delete(leadId: LeadId): Promise<void> {
         const LeadModel = this.models.Lead;
         return LeadModel.destroy({ where: { id: leadId } });
     }
