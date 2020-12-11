@@ -26,7 +26,7 @@ export const Client = (sequelize: Sequelize) => {
         underscored: true,
         tableName: 'clients'
     });
-    //Below needs to be changed to match the schema we create within Postgres.
+
     Client.hasMany(Project(sequelize), { foreignKey: 'project_id', as: 'Projects' })
 
     return Client;
