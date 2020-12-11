@@ -23,6 +23,5 @@ export default (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
 
     ReferralPartner.hasMany(Lead(sequelize, dataTypes), { foreignKey: 'lead_id', as: 'Leads' })
 
-
     return ReferralPartner;
 };

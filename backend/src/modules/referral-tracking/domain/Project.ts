@@ -1,3 +1,5 @@
+import { ProjectId } from "./ProjectId"
+
 export interface ProjectProps {
     id?: string,
     clientId: string;
@@ -6,10 +8,11 @@ export interface ProjectProps {
 }
 
 export class Project {
+    id?: string
     props: ProjectProps
 
-    get id(): string {
-        return this.props.id || ""
+    get projectId(): ProjectId {
+        return ProjectId.create({ id: this.id })
     }
 
     private constructor(props: ProjectProps) {
