@@ -1,18 +1,18 @@
 import { Sequelize, DataTypes } from "sequelize/types";
 import Lead from "./Lead";
 
-export default (sequelize: Sequelize) => {
+export default (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     // When timestamps are enabled in options, createdAt and updatedAt fields
     // are created automatically for every model
     const ReferralPartner = sequelize.define('referral_partner', {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: dataTypes.UUID,
+            defaultValue: dataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
         username: {
-            type: DataTypes.STRING,
+            type: dataTypes.STRING,
             allowNull: false,
         }
     }, {
@@ -21,7 +21,7 @@ export default (sequelize: Sequelize) => {
         tableName: 'referral-owner'
     });
 
-    ReferralPartner.hasMany(Lead(sequelize), { foreignKey: 'lead_id', as: 'Leads' })
+    ReferralPartner.hasMany(Lead(sequelize, dataTypes), { foreignKey: 'lead_id', as: 'Leads' })
 
 
     return ReferralPartner;

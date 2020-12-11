@@ -1,20 +1,20 @@
 import { Sequelize, DataTypes, Optional, Model } from "sequelize/types";
 import { Client } from "./Client";
 
-export const Project = (sequelize: Sequelize) => {
-    const Project = sequelize.define('project', {
+export const Project = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
+    const project = sequelize.define('project', {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: dataTypes.UUID,
+            defaultValue: dataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
         estimate: {
-            type: DataTypes.NUMBER,
+            type: dataTypes.NUMBER,
             allowNull: false,
         },
         title: {
-            type: DataTypes.STRING,
+            type: dataTypes.STRING,
             allowNull: false,
         }
     }, {
@@ -24,7 +24,7 @@ export const Project = (sequelize: Sequelize) => {
     });
 
 
-    Project.belongsTo(Client(sequelize), { foreignKey: 'client_id', targetKey: 'id', as: 'Client' })
+    project.belongsTo(Client(sequelize, dataTypes), { foreignKey: 'client_id', targetKey: 'id', as: 'Client' })
 
-    return Project;
+    return project;
 };

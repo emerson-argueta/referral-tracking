@@ -4,13 +4,13 @@ import { Project } from "./Project";
 import { ReferralOwner } from "./ReferralOwner";
 import ReferralPartner from "./ReferralPartner";
 
-export default (sequelize: Sequelize) => {
+export default (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     // When timestamps are enabled in options, createdAt and updatedAt fields
     // are created automatically for every model
-    const Lead = sequelize.define('lead', {
+    const lead = sequelize.define('lead', {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: dataTypes.UUID,
+            defaultValue: dataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
@@ -20,10 +20,9 @@ export default (sequelize: Sequelize) => {
         tableName: 'leads'
     });
 
+    lead.belongsTo(ReferralPartner(sequelize, dataTypes), { foreignKey: 'referral_partner_id', targetKey: 'id', as: 'ReferralPartner' })
+    lead.belongsTo(ReferralOwner(sequelize, dataTypes), { foreignKey: 'referral_owner_id', targetKey: 'id', as: 'ReferralOwner' })
+    lead.belongsTo(Client(sequelize, dataTypes), { foreignKey: 'client_id', as: 'Client' })
 
-    Lead.belongsTo(ReferralPartner(sequelize), { foreignKey: 'referral_partner_id', targetKey: 'id', as: 'ReferralPartner' })
-    Lead.belongsTo(ReferralOwner(sequelize), { foreignKey: 'referral_owner_id', targetKey: 'id', as: 'ReferralOwner' })
-    Lead.hasOne(Client(sequelize), { foreignKey: 'client_id', as: 'Client' })
-
-    return Lead;
+    return lead;
 };

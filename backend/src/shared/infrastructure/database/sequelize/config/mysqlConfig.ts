@@ -47,7 +47,7 @@ console.log(`[DB]: Connecting to the database in ${mode} mode.`)
 
 const squelizeDialect = dialect as "mysql" | "postgres"
 
-export const connection = REFERRAL_TRACKING_IS_PRODUCTION === "true"
+export const MysqlConnection = REFERRAL_TRACKING_IS_PRODUCTION === "true"
     ? new Sequelize(CLEARDB_DATABASE_URL || '')
     : new Sequelize(database || '', username || '', password || '', {
         host: host || '',

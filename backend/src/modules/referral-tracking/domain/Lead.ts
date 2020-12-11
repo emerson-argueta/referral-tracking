@@ -1,10 +1,10 @@
 import { Client } from "./Client"
+import { LeadId } from "./LeadId"
 import { Project } from "./Project"
 import { ReferralOwner } from "./ReferralOwner"
 import { ReferralPartner } from "./ReferralPartner"
 
 export interface LeadProps {
-    id?: string;
     referralPartner: ReferralPartner;
     referralOwner: ReferralOwner;
     client: Client;
@@ -13,8 +13,12 @@ export interface LeadProps {
 }
 
 export class Lead {
+    id?: string;
     props: LeadProps
 
+    get leadId(): LeadId {
+        return LeadId.create({ id: this.id })
+    }
     get dateTime(): Date {
         return this.props.dateTime
     }

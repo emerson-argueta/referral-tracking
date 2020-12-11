@@ -1,14 +1,15 @@
+import { ReferralOwnerId } from "./ReferralOwnerId"
 
 interface ReferralOwnerProps {
-    id: string;
     username: string;
 }
 
 export class ReferralOwner {
+    id?: string;
     props: ReferralOwnerProps
 
-    get id(): string {
-        return this.props.id
+    get referralOwnerId(): ReferralOwnerId {
+        return ReferralOwnerId.create({ id: this.id })
     }
 
     get username(): string {

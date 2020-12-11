@@ -1,19 +1,18 @@
 import { Sequelize, DataTypes } from "sequelize/types";
 import Lead from "./Lead";
-import ReferralPartner from "./ReferralPartner";
 
-export const ReferralOwner = (sequelize: Sequelize) => {
+export const ReferralOwner = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     // When timestamps are enabled in options, createdAt and updatedAt fields
     // are created automatically for every model
-    const ReferralOwner = sequelize.define('referral_owner', {
+    const referralOwner = sequelize.define('referral_owner', {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: dataTypes.UUID,
+            defaultValue: dataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
         username: {
-            type: DataTypes.STRING,
+            type: dataTypes.STRING,
             allowNull: false,
         }
     }, {
@@ -22,8 +21,7 @@ export const ReferralOwner = (sequelize: Sequelize) => {
         tableName: 'referral-owner'
     });
 
-    //Below needs to be changed to match the schema we create within Postgres.
-    ReferralOwner.hasMany(Lead(sequelize), { foreignKey: 'lead_id', as: 'Leads' })
+    referralOwner.hasMany(Lead(sequelize, dataTypes), { foreignKey: 'lead_id', as: 'Leads' })
 
-    return ReferralOwner;
+    return referralOwner;
 };

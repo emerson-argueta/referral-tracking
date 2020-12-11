@@ -1,5 +1,6 @@
+import { ClientId } from "./ClientId";
+
 export interface ClientProps {
-    id?: string;
     name: string;
     email: string
 }
@@ -7,16 +8,15 @@ export interface ClientProps {
 
 
 export class Client {
+    id?: string;
     props: ClientProps
 
-
-    get id(): string {
-        return this.props.id || ""
+    get clientId(): ClientId {
+        return ClientId.create({ id: this.id })
     }
     get email(): string {
         return this.props.email
     }
-
 
     get name(): string {
         return this.props.name

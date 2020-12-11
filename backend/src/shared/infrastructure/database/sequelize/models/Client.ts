@@ -1,24 +1,22 @@
-import { Sequelize, DataTypes, Model, BuildOptions, InstanceUpdateOptions, ModelStatic, Optional } from "sequelize/types";
+import { Sequelize, DataTypes } from "sequelize/types";
 import { Project } from "./Project";
-import { ReferralOwner } from "./ReferralOwner";
-import ReferralPartner from "./ReferralPartner";
 
-export const Client = (sequelize: Sequelize) => {
+export const Client = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     // When timestamps are enabled in options, createdAt and updatedAt fields
     // are created automatically for every model
-    const Client = sequelize.define('client', {
+    const client = sequelize.define('client', {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: dataTypes.UUID,
+            defaultValue: dataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
         name: {
-            type: DataTypes.STRING,
+            type: dataTypes.STRING,
             allowNull: false,
         },
         email: {
-            type: DataTypes.STRING,
+            type: dataTypes.STRING,
             allowNull: false,
         },
     }, {
@@ -27,7 +25,8 @@ export const Client = (sequelize: Sequelize) => {
         tableName: 'clients'
     });
 
-    Client.hasMany(Project(sequelize), { foreignKey: 'project_id', as: 'Projects' })
+    client.hasMany(Project(sequelize, dataTypes), { foreignKey: 'project_id', as: 'Projects' })
 
-    return Client;
+    return client;
 };
+
