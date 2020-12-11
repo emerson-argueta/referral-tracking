@@ -1,6 +1,11 @@
+import { ClientId } from "../domain/ClientId";
+import { ProjectId } from "../domain/ProjectId";
+import { ReferralOwnerId } from "../domain/ReferralOwnerId";
+import { ReferralPartnerId } from "../domain/ReferralPartnerId";
+
 export interface IUniqueLead {
-    referralPartnerId: string
-    referralOwnerId: string
-    clientId: string
-    projectId: string
+    referralPartnerId: ReferralPartnerId
+    referralOwnerId: ReferralOwnerId
+    clientId: ClientId
+    projectId: ProjectId
 }

@@ -4,14 +4,14 @@ import { Project } from "./Project";
 export interface ClientProps {
     name: string;
     email: string
-    projects: Array<Project>
+    projects?: Array<Project>
 }
 
 
 
 export class Client {
-    id?: string;
-    props: ClientProps
+    private id?: string;
+    private props: ClientProps
 
     get clientId(): ClientId {
         return ClientId.create({ id: this.id })
@@ -25,12 +25,13 @@ export class Client {
     }
 
 
-    private constructor(props: ClientProps) {
+    private constructor(props: ClientProps, id?: string) {
         this.props = props
+        this.id = id
     }
 
-    public static create(props: ClientProps): Client {
-        const client = new Client(props)
+    public static create(props: ClientProps, id?: string): Client {
+        const client = new Client(props, id)
 
         return client
     }

@@ -1,14 +1,14 @@
 import { Lead } from "./Lead";
 import { ReferralPartnerId } from "./ReferralPartnerId"
 
-interface ReferralPartnerProps {
+export interface ReferralPartnerProps {
     username: string;
-    leads: Array<Lead>
+    leads?: Array<Lead>
 }
 
 export class ReferralPartner {
-    id?: string;
-    props: ReferralPartnerProps
+    private id?: string;
+    private props: ReferralPartnerProps
 
     get referralPartnerId(): ReferralPartnerId {
         return ReferralPartnerId.create({ id: this.id })
@@ -18,11 +18,17 @@ export class ReferralPartner {
         return this.props.username
     }
 
-    private constructor(props: ReferralPartnerProps) {
-        this.props = props
+
+    public get leads(): Array<Lead> | undefined {
+        return this.props.leads
     }
 
-    public static create(props: ReferralPartnerProps): ReferralPartner {
+    private constructor(props: ReferralPartnerProps, id?: string) {
+        this.props = props
+        this.id = id
+    }
+
+    public static create(props: ReferralPartnerProps, id?: string): ReferralPartner {
         const referralPartner = new ReferralPartner(props)
 
         return referralPartner

@@ -28,7 +28,8 @@ const getAllModels = (): Array<typeof Sequelize.Model> => {
         .map((model) => sequelize.import(__dirname + '/' + model))
 }
 
-let models: { [modelName: string]: typeof Sequelize.Model | Sequelize.Sequelize | typeof Sequelize }
+export type TModels = { [modelName: string]: typeof Sequelize.Model | Sequelize.Sequelize | typeof Sequelize }
+let models: TModels
 let modelsLoaded = false;
 const createModels = () => {
     if (modelsLoaded) return models;

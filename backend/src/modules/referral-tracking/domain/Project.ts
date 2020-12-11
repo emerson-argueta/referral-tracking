@@ -1,7 +1,9 @@
+import { Client } from "./Client"
+import { ClientId } from "./ClientId"
 import { ProjectId } from "./ProjectId"
 
 export interface ProjectProps {
-    clientId: string;
+    clientId: ClientId;
     estimate: string;
     title: string;
 }

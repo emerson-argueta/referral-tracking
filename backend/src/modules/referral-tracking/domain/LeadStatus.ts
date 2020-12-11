@@ -1,0 +1,7 @@
+export type LeadStatus = "open"
+    | "scheduled"
+    | "proposal"
+    | "lost"
+    | "won"
+    | "closed"
+    | "closed"
