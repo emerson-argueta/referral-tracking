@@ -1,54 +1,30 @@
-import { Sequelize, DataTypes } from "sequelize/types";
+import { Sequelize, DataTypes, Optional, Model } from "sequelize/types";
+import { Client } from "./Client";
 
-export default (sequelize, DataTypes) => {
+export const Project = (sequelize: Sequelize) => {
     const Project = sequelize.define('project', {
-        project_id: {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
-        client_id: {
-            type: DataTypes.UUID,
-            allowNull: false,
-            references: {
-                model: 'client',
-                key: 'client_id'
-            },
-            onDelete: 'cascade',
-            onUpdate: 'cascade',
-        },
         estimate: {
-            type: DataTypes.UUID,
+            type: DataTypes.NUMBER,
             allowNull: false,
-            references: {
-                model: 'projects',
-                key: 'estimate'
-            },
-            onDelete: 'cascade',
-            onUpdate: 'cascade',
         },
         title: {
-            type: DataTypes.UUID,
+            type: DataTypes.STRING,
             allowNull: false,
-            references: {
-                model: 'projects',
-                key: 'title'
-            },
-            onDelete: 'cascade',
-            onUpdate: 'cascade',
         }
     }, {
         timestamps: true,
         underscored: true,
-        tableName: 'lead'
+        tableName: 'lead',
     });
 
-    Project.associate = (models) => {
-        Project.belongsTo(models.Member, { foreignKey: 'member_id', targetKey: 'member_id', as: 'Member' })
-        Project.belongsTo(models.Post, { foreignKey: 'post_id', targetKey: 'post_id', as: 'Post' })
-        Project.hasMany(models.leadVote, { foreignKey: 'lead_id', as: 'leadVotes' })
-    }
+
+    Project.belongsTo(Client(sequelize), { foreignKey: 'client_id', targetKey: 'id', as: 'Client' })
 
     return Project;
 };
