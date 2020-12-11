@@ -1,8 +1,10 @@
 import { ClientId } from "./ClientId";
+import { Project } from "./Project";
 
 export interface ClientProps {
     name: string;
     email: string
+    projects: Array<Project>
 }
 
 

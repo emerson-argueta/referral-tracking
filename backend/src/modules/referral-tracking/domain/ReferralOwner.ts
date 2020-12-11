@@ -1,7 +1,9 @@
+import { Lead } from "./Lead";
 import { ReferralOwnerId } from "./ReferralOwnerId"
 
 interface ReferralOwnerProps {
     username: string;
+    leads: Array<Lead>
 }
 
 export class ReferralOwner {
