@@ -1,5 +1,6 @@
 import { ReferralPartner } from "../domain/ReferralPartner";
 
 export interface IReferralPartnerRepo {
-    getReferralPartnerById(referralPartnerId: string): Promise<ReferralPartner>;
+    getReferralPartnerByUsername(referralPartnerUsername: string): Promise<ReferralPartner>;
+    save(referralPartner: ReferralPartner): Promise<void>
 }
