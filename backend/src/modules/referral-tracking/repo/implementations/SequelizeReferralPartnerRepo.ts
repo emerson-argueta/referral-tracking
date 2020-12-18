@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReferralPartner } from "../../domain/ReferralPartner";
+import { UniqueEntityID } from "../../../../shared/domain/UniqueEntityID";
+import { ClientId } from "../../domain/ClientId";
+import { Lead, LeadProps } from "../../domain/Lead";
+import { ProjectId } from "../../domain/ProjectId";
+import { ReferralOwnerId } from "../../domain/ReferralOwnerId";
+import { ReferralPartner, ReferralPartnerProps } from "../../domain/ReferralPartner";
 import { ReferralPartnerId } from "../../domain/ReferralPartnerId";
-import { ReferralPartnerMapper } from "../../mapper/ReferralPartnerMapper";
 import { IReferralPartnerRepo } from "../ReferralPartnerRepo";
 
 export class ReferralPartnerRepo implements IReferralPartnerRepo {
@@ -21,9 +25,21 @@ export class ReferralPartnerRepo implements IReferralPartnerRepo {
     }
 
     async getReferralPartnerByUsername(ReferralPartnerUsername: string): Promise<ReferralPartner> {
-        const partner = {
-            username: 'partnerUserName'
+        const leadProps: LeadProps = {
+            referralPartnerId: ReferralPartnerId.create(new UniqueEntityID("RANDOM_UUID_FOR_REFERRAL_PARTNER")),
+            referralOwnerId: ReferralOwnerId.create(new UniqueEntityID("RANDOM_UUID_FOR_REFERRAL_OWNER")),
+            clientId: ClientId.create(new UniqueEntityID("RANDOM_UUID_FOR_CLIENT")),
+            projectId: ProjectId.create(new UniqueEntityID("RANDOM_UUID_FOR_PROJECT")),
+            dateTime: new Date(),
+            status: "open",
         }
+        const lead = Lead.create(leadProps)
+
+        const referralPartnerProps: ReferralPartnerProps = {
+            username: 'partnerUserName',
+            leads: [lead, lead, lead]
+        }
+        const referralPartner = ReferralPartner.create(referralPartnerProps)
 
         // const ReferralPartnerModel = this.models.ReferralPartner as any
         // const detailsQuery = this.createBaseQuery();
@@ -35,6 +51,7 @@ export class ReferralPartnerRepo implements IReferralPartnerRepo {
 
         // if (!found) throw new Error('Referral Partner found.');
         // return ReferralPartnerMapper.toDomain(referralPartner)
+        return await referralPartner
     }
 
 

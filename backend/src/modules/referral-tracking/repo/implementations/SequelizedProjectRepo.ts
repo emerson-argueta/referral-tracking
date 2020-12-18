@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Project } from "../../domain/Project";
+import { UniqueEntityID } from "../../../../shared/domain/UniqueEntityID";
+import { ClientId } from "../../domain/ClientId";
+import { Project, ProjectProps } from "../../domain/Project";
 import { ProjectId } from "../../domain/ProjectId";
 import { ProjectMapper } from "../../mapper/ProjectMapper";
 import { IProjectRepo } from "../ProjectRepo";
@@ -43,6 +45,16 @@ export class ProjectRepo implements IProjectRepo {
         // }
     }
 
+    async getProjectById(projectId: ProjectId): Promise<Project> {
+        const projectProps: ProjectProps = {
+            clientId: ClientId.create(new UniqueEntityID("Bruce Banner")),
+            title: "thehulk@notyourmom.com",
+            estimate: "9001"
+        }
+        const project = Project.create(projectProps)
+
+        return await project
+    }
 
     private async exists(projectId: ProjectId): Promise<boolean> {
         // const ProjectModel = this.models.Project as any

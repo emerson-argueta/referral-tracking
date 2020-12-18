@@ -1,6 +1,7 @@
 import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 import { ClientId } from "../domain/ClientId";
 import { Project, ProjectProps } from "../domain/Project";
+import { ProjectDTO } from "../dtos/ProjectDTO";
 
 export class ProjectMapper {
     public static toDomain(raw: any): Project {
@@ -23,6 +24,13 @@ export class ProjectMapper {
             clientId: project.clientId.id.toValue(),
             estimate: project.estimate,
             title: project.title
+        }
+    }
+
+    public static toDTO(project: Project): ProjectDTO {
+        return {
+            title: project.title,
+            estimate: project.estimate
         }
     }
 }

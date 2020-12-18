@@ -1,4 +1,5 @@
 import { Lead, LeadProps } from "../domain/Lead";
+import { LeadDTO } from "../dtos/LeadDTO";
 
 
 export class LeadMapper {
@@ -16,6 +17,13 @@ export class LeadMapper {
             updatedAt: new Date().toString(),
             status: lead.status,
             id: lead.leadId,
+        }
+    }
+
+    public static toDTO(lead: Lead): LeadDTO {
+        return {
+            dateTime: lead.dateTime.toDateString(),
+            status: lead.status
         }
     }
 }

@@ -1,0 +1,1 @@
+{"version":3,"file":"GetLeadsForOwnerErrors.js","sourceRoot":"","sources":["../../../../../../src/modules/referral-tracking/usecase/leads/get-leads-for-owner/GetLeadsForOwnerErrors.ts"],"names":[],"mappings":";;;AAAA,oDAAoD;AACpD,IAAiB,sBAAsB,CAGtC;AAHD,WAAiB,sBAAsB;IACtB,gDAAyB,GAAG,gCAAgC,CAAA;AAE7E,CAAC,EAHgB,sBAAsB,GAAtB,8BAAsB,KAAtB,8BAAsB,QAGtC"}

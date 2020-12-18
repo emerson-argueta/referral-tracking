@@ -18,6 +18,12 @@ class ClientMapper {
             id: client.clientId
         };
     }
+    static toDTO(client) {
+        return {
+            name: client.name,
+            email: client.email
+        };
+    }
 }
 exports.ClientMapper = ClientMapper;
 //# sourceMappingURL=ClientMapper.js.map

@@ -1,6 +1,9 @@
+import { UniqueEntityID } from "../../../../../shared/domain/UniqueEntityID";
 import { Client, ClientProps } from "../../../domain/Client";
 import { Lead, LeadProps } from "../../../domain/Lead";
 import { Project, ProjectProps } from "../../../domain/Project";
+import { ReferralOwnerId } from "../../../domain/ReferralOwnerId";
+import { ReferralPartnerId } from "../../../domain/ReferralPartnerId";
 import { IClientRepo } from "../../../repo/ClientRepo";
 import { ILeadRepo } from "../../../repo/LeadRepo";
 import { IProjectRepo } from "../../../repo/ProjectRepo";
@@ -23,7 +26,7 @@ export class InputLead {
         this.projectRepo = projectRepo
 
     }
-    async execute(request: InputLeadDTO): Promise<Response> {
+    async execute(dto: InputLeadDTO): Promise<Response> {
         const {
             referralPartnerId,
             referralOwnerId,
@@ -31,7 +34,7 @@ export class InputLead {
             clientName,
             projectTitle,
             projectEstimate
-        } = request
+        } = dto
 
         let client: Client
 
@@ -61,8 +64,8 @@ export class InputLead {
         // If lead exists return error, otherwise create and save lead, and save project
         try {
             const leadExistsProps: IUniqueLead = {
-                referralPartnerId: referralPartnerId,
-                referralOwnerId: referralOwnerId,
+                referralPartnerId: ReferralPartnerId.create(new UniqueEntityID(referralPartnerId)),
+                referralOwnerId: ReferralOwnerId.create(new UniqueEntityID(referralOwnerId)),
                 clientId: client.clientId,
                 projectId: project.projectId
             }
@@ -72,8 +75,8 @@ export class InputLead {
             return InputLeadErrors.InputLeadExists
         } catch (error) {
             const leadProps: LeadProps = {
-                referralPartnerId: referralPartnerId,
-                referralOwnerId: referralOwnerId,
+                referralPartnerId: ReferralPartnerId.create(new UniqueEntityID(referralPartnerId)),
+                referralOwnerId: ReferralOwnerId.create(new UniqueEntityID(referralOwnerId)),
                 clientId: client.clientId,
                 dateTime: new Date(),
                 projectId: project.projectId,

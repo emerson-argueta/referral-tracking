@@ -49,20 +49,20 @@ console.log(`[DB]: Connecting to the database in ${mode} mode.`)
 
 const squelizeDialect = dialect as "mysql" | "postgres"
 
-export const MysqlConnection = REFERRAL_TRACKING_IS_PRODUCTION === "true"
-    ? new Sequelize(CLEARDB_DATABASE_URL || '')
-    : new Sequelize(database || '', username || '', password || '', {
-        host: host || '',
-        dialect: squelizeDialect,
-        port: 3306,
-        dialectOptions: {
-            multipleStatements: true,
-        },
-        pool: {
-            max: 5,
-            min: 0,
-            idle: 10000
-        },
-        logging: false
-    }
-    );
+// export const MysqlConnection = REFERRAL_TRACKING_IS_PRODUCTION === "true"
+//     ? new Sequelize(CLEARDB_DATABASE_URL || '')
+//     : new Sequelize(database || '', username || '', password || '', {
+//         host: host || '',
+//         dialect: squelizeDialect,
+//         port: 3306,
+//         dialectOptions: {
+//             multipleStatements: true,
+//         },
+//         pool: {
+//             max: 5,
+//             min: 0,
+//             idle: 10000
+//         },
+//         logging: false
+//     }
+//     );

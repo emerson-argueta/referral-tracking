@@ -24,6 +24,12 @@ class ProjectMapper {
             title: project.title
         };
     }
+    static toDTO(project) {
+        return {
+            title: project.title,
+            estimate: project.estimate
+        };
+    }
 }
 exports.ProjectMapper = ProjectMapper;
 //# sourceMappingURL=ProjectMapper.js.map

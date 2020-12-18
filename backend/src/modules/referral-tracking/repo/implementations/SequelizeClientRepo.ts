@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { resolve } from "bluebird";
-import { TModels } from "../../../../shared/infrastructure/database/sequelize/models";
-import { Client } from "../../domain/Client";
+// import { TModels } from "../../../../shared/infrastructure/database/sequelize/models";
+import { Client, ClientProps } from "../../domain/Client";
 import { ClientId } from "../../domain/ClientId";
 import { ClientMapper } from "../../mapper/ClientMapper";
 import { IClientRepo } from "../ClientRepo";
 
 export class ClientRepo implements IClientRepo {
-    private models: TModels
+    private models: any
 
-    constructor(models: TModels) {
+    constructor(models: any) {
         this.models = models
 
     }
@@ -64,6 +64,17 @@ export class ClientRepo implements IClientRepo {
         //         where: { client_id: client.clientId }
         //     });
         // }
+
+    }
+
+    async getClientById(clientId: ClientId): Promise<Client> {
+        const clientProps: ClientProps = {
+            name: "Peter Parker",
+            email: "yourfriendlyneighborhoodspiderman@yourmom.com"
+        }
+        const client = Client.create(clientProps)
+
+        return await client
 
     }
     private async exists(clientId: ClientId): Promise<boolean> {

@@ -1,9 +1,8 @@
-import { ReferralOwnerId } from "../../../domain/ReferralOwnerId";
-import { ReferralPartnerId } from "../../../domain/ReferralPartnerId";
+
 
 export interface InputLeadDTO {
-    referralPartnerId: ReferralPartnerId;
-    referralOwnerId: ReferralOwnerId;
+    referralPartnerId: string;
+    referralOwnerId: string;
     projectTitle: string;
     projectEstimate: string;
     clientName: string;

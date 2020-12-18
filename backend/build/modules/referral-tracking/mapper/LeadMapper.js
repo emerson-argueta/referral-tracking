@@ -18,6 +18,12 @@ class LeadMapper {
             id: lead.leadId,
         };
     }
+    static toDTO(lead) {
+        return {
+            dateTime: lead.dateTime.toDateString(),
+            status: lead.status
+        };
+    }
 }
 exports.LeadMapper = LeadMapper;
 //# sourceMappingURL=LeadMapper.js.map

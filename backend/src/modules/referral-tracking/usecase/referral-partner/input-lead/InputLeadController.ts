@@ -25,6 +25,7 @@ export class InputLeadController {
         }
 
         try {
+            console.log("this is the dto", dto)
             await this.useCase.execute(dto);
             return res.sendStatus(200);
         } catch (error) {
