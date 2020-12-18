@@ -1,29 +1,29 @@
+import { AggregateRoot } from "../../../shared/domain/AggregateRoot";
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 import { Lead } from "./Lead";
 import { ReferralOwnerId } from "./ReferralOwnerId"
 
 interface ReferralOwnerProps {
     username: string;
-    leads: Array<Lead>
+    leads: Array<Lead>;
 }
 
-export class ReferralOwner {
-    id?: string;
-    props: ReferralOwnerProps
+export class ReferralOwner extends AggregateRoot<ReferralOwnerProps>{
 
     get referralOwnerId(): ReferralOwnerId {
-        return ReferralOwnerId.create({ id: this.id })
+        return ReferralOwnerId.create(this._id)
     }
 
     get username(): string {
         return this.props.username
     }
 
-    private constructor(props: ReferralOwnerProps) {
-        this.props = props
+    private constructor(props: ReferralOwnerProps, id?: UniqueEntityID) {
+        super(props, id)
     }
 
-    public static create(props: ReferralOwnerProps): ReferralOwner {
-        const referralOwner = new ReferralOwner(props)
+    public static create(props: ReferralOwnerProps, id?: UniqueEntityID): ReferralOwner {
+        const referralOwner = new ReferralOwner(props, id)
 
         return referralOwner
 

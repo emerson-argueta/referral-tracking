@@ -1,12 +1,9 @@
-import { idText } from "typescript";
 import { Client, ClientProps } from "../../../domain/Client";
 import { Lead, LeadProps } from "../../../domain/Lead";
 import { Project, ProjectProps } from "../../../domain/Project";
-import { ReferralOwner } from "../../../domain/ReferralOwner";
-import { ReferralPartner } from "../../../domain/ReferralPartner";
 import { IClientRepo } from "../../../repo/ClientRepo";
-import { LeadRepo } from "../../../repo/implementations/SequelizeLeadRepo";
 import { ILeadRepo } from "../../../repo/LeadRepo";
+import { IProjectRepo } from "../../../repo/ProjectRepo";
 import { IUniqueLead } from "../../../repo/UniqueLead";
 import { InputLeadDTO } from "./InputLeadDTO";
 import { InputLeadErrors } from "./InputLeadErrors";
@@ -16,13 +13,14 @@ type Response = string |
     typeof InputLeadErrors.InputLeadInvalid
 
 export class InputLead {
-    referralPartnerRepo: any
     private clientRepo: IClientRepo
     private leadRepo: ILeadRepo
+    private projectRepo: IProjectRepo
 
-    constructor(leadRepo: ILeadRepo, clientRepo: IClientRepo) {
+    constructor(leadRepo: ILeadRepo, clientRepo: IClientRepo, projectRepo: IProjectRepo) {
         this.leadRepo = leadRepo
         this.clientRepo = clientRepo
+        this.projectRepo = projectRepo
 
     }
     async execute(request: InputLeadDTO): Promise<Response> {
@@ -35,21 +33,7 @@ export class InputLead {
             projectEstimate
         } = request
 
-        let referralPartner: ReferralPartner
-        let referralOwner: ReferralOwner
         let client: Client
-
-        try {
-            referralPartner = await this.referralPartnerRepo.getReferralPartnerById(referralPartnerId)
-        } catch (error) {
-            return error
-        }
-
-        try {
-            referralOwner = await this.referralPartnerRepo.getReferralOwnerById(referralOwnerId)
-        } catch (error) {
-            return error
-        }
 
         // Finding the client, if the client is not found creates a new client
         try {
@@ -74,12 +58,11 @@ export class InputLead {
         }
         const project = Project.create(projectProps)
 
-
-
+        // If lead exists return error, otherwise create and save lead, and save project
         try {
             const leadExistsProps: IUniqueLead = {
-                referralPartnerId: referralPartner.referralPartnerId,
-                referralOwnerId: referralOwner.referralOwnerId,
+                referralPartnerId: referralPartnerId,
+                referralOwnerId: referralOwnerId,
                 clientId: client.clientId,
                 projectId: project.projectId
             }
@@ -89,16 +72,26 @@ export class InputLead {
             return InputLeadErrors.InputLeadExists
         } catch (error) {
             const leadProps: LeadProps = {
-                referralPartner: referralPartner,
-                referralOwner: referralOwner,
-                client: client,
+                referralPartnerId: referralPartnerId,
+                referralOwnerId: referralOwnerId,
+                clientId: client.clientId,
                 dateTime: new Date(),
-                project: project,
+                projectId: project.projectId,
                 status: "open"
             }
 
             const lead = Lead.create(leadProps)
-            await this.leadRepo.save(lead)
+            try {
+                await this.leadRepo.save(lead)
+            } catch (error) {
+                return error
+            }
+            try {
+                await this.projectRepo.save(project)
+            } catch (error) {
+                return error
+            }
+
         }
 
         return 'success'

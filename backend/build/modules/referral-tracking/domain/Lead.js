@@ -1,28 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Lead = void 0;
-var Lead = /** @class */ (function () {
-    function Lead(props) {
-        this.props = props;
+const AggregateRoot_1 = require("../../../shared/domain/AggregateRoot");
+const LeadId_1 = require("./LeadId");
+class Lead extends AggregateRoot_1.AggregateRoot {
+    get leadId() {
+        return LeadId_1.LeadId.create(this._id);
     }
-    Object.defineProperty(Lead.prototype, "dateTime", {
-        get: function () {
-            return this.props.dateTime;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Lead.prototype, "project", {
-        get: function () {
-            return this.props.project;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Lead.create = function (props) {
-        var lead = new Lead(props);
+    get ReferraPartnerId() {
+        return this.props.referralPartnerId;
+    }
+    get ReferralOwnerId() {
+        return this.props.referralOwnerId;
+    }
+    get ClientId() {
+        return this.props.clientId;
+    }
+    get projectId() {
+        return this.props.projectId;
+    }
+    get dateTime() {
+        return this.props.dateTime;
+    }
+    get status() {
+        return this.props.status;
+    }
+    constructor(props, id) {
+        super(props, id);
+    }
+    static create(props, id) {
+        const lead = new Lead(props, id);
         return lead;
-    };
-    return Lead;
-}());
+    }
+}
 exports.Lead = Lead;
+//# sourceMappingURL=Lead.js.map

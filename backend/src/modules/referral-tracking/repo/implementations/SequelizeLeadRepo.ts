@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Lead } from "../../domain/Lead";
 import { LeadId } from "../../domain/LeadId";
 import { LeadMapper } from "../../mapper/LeadMapper";
@@ -19,15 +21,24 @@ export class LeadRepo implements ILeadRepo {
     }
 
     async findLead(uniqueLeadProps: IUniqueLead): Promise<Lead> {
-        const LeadModel = this.models.Lead as any
+        // const LeadModel = this.models.Lead as any
 
-        const detailsQuery = this.createBaseQuery()
-        detailsQuery.where = uniqueLeadProps
+        // const detailsQuery = this.createBaseQuery()
+        // detailsQuery.where = uniqueLeadProps
 
-        const lead = await LeadModel.findOne(detailsQuery);
-        const found = !!lead === true;
+        // const lead = await LeadModel.findOne(detailsQuery);
+        // const found = !!lead === true;
 
-        if (!found) throw new Error('Lead not found');
+        // if (!found) throw new Error('Lead not found');
+
+        const lead = {
+            projectId: uniqueLeadProps.projectId,
+            clientId: uniqueLeadProps.clientId,
+            referralOwnerId: uniqueLeadProps.referralOwnerId,
+            referralPartnerId: uniqueLeadProps.referralPartnerId,
+            updatedAt: new Date().toISOString(),
+            status: "open"
+        }
 
         return LeadMapper.toDomain(lead);
 

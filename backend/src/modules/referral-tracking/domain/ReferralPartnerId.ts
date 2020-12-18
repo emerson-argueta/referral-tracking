@@ -1,17 +1,18 @@
-export interface ReferralPartnerIdProps {
-    id?: string | number
-}
-export class ReferralPartnerId {
-    props: ReferralPartnerIdProps;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Entity } from "../../../shared/domain/Entity";
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 
-    private constructor(props: ReferralPartnerIdProps) {
-        this.props = props
+export class ReferralPartnerId extends Entity<any> {
+    get id(): UniqueEntityID {
+        return this._id;
     }
 
-    public static create(props: ReferralPartnerIdProps) {
-        const referralPartnerId = new ReferralPartnerId(props)
+    private constructor(id?: UniqueEntityID) {
+        super(null, id);
+    }
 
-        return referralPartnerId
+    public static create(id?: UniqueEntityID): ReferralPartnerId {
+        return new ReferralPartnerId(id);
     }
 
 

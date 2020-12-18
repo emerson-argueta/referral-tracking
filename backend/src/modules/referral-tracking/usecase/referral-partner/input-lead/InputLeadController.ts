@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express'
-import { DecodedExpressRequest } from '../../../../users/infrastructure/http/models/DecodedExpressRequest';
 import { InputLead } from './InputLead';
 import { InputLeadDTO } from './InputLeadDTO';
 import { InputLeadErrors } from './InputLeadErrors';
@@ -12,8 +12,7 @@ export class InputLeadController {
         this.useCase = useCase;
     }
 
-    async execute(req: DecodedExpressRequest, res: express.Response): Promise<any> {
-        const referralPartnerId = req.decoded.userId
+    async execute(req: express.Request, res: express.Response): Promise<any> {
 
         const dto: InputLeadDTO = {
             referralPartnerId: req.body.referralPartnerId,
@@ -26,7 +25,7 @@ export class InputLeadController {
         }
 
         try {
-            const result = await this.useCase.execute(dto);
+            await this.useCase.execute(dto);
             return res.sendStatus(200);
         } catch (error) {
             switch (error) {

@@ -1,28 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReferralOwner = void 0;
-var ReferralOwner = /** @class */ (function () {
-    function ReferralOwner(props) {
-        this.props = props;
+const AggregateRoot_1 = require("../../../shared/domain/AggregateRoot");
+const ReferralOwnerId_1 = require("./ReferralOwnerId");
+class ReferralOwner extends AggregateRoot_1.AggregateRoot {
+    get referralOwnerId() {
+        return ReferralOwnerId_1.ReferralOwnerId.create(this._id);
     }
-    Object.defineProperty(ReferralOwner.prototype, "userId", {
-        get: function () {
-            return this.props.userId;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(ReferralOwner.prototype, "username", {
-        get: function () {
-            return this.props.username;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    ReferralOwner.create = function (props) {
-        var referralOwner = new ReferralOwner(props);
+    get username() {
+        return this.props.username;
+    }
+    constructor(props, id) {
+        super(props, id);
+    }
+    static create(props, id) {
+        const referralOwner = new ReferralOwner(props, id);
         return referralOwner;
-    };
-    return ReferralOwner;
-}());
+    }
+}
 exports.ReferralOwner = ReferralOwner;
+//# sourceMappingURL=ReferralOwner.js.map

@@ -1,18 +1,18 @@
-export interface ClientIdProps {
-    id?: string | number
-}
-export class ClientId {
-    props: ClientIdProps;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Entity } from "../../../shared/domain/Entity";
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 
-    private constructor(props: ClientIdProps) {
-        this.props = props
+export class ClientId extends Entity<any> {
+    get id(): UniqueEntityID {
+        return this._id;
     }
 
-    public static create(props: ClientIdProps) {
-        const clientId = new ClientId(props)
-
-        return clientId
+    private constructor(id?: UniqueEntityID) {
+        super(null, id)
     }
 
+    public static create(id?: UniqueEntityID): ClientId {
+        return new ClientId(id);
+    }
 
 }

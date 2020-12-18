@@ -1,32 +1,44 @@
-import { Client } from "./Client"
+import { AggregateRoot } from "../../../shared/domain/AggregateRoot"
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID"
+import { ClientId } from "./ClientId"
 import { LeadId } from "./LeadId"
 import { LeadStatus } from "./LeadStatus"
-import { Project } from "./Project"
-import { ReferralOwner } from "./ReferralOwner"
-import { ReferralPartner } from "./ReferralPartner"
+import { ProjectId } from "./ProjectId"
+import { ReferralOwnerId } from "./ReferralOwnerId"
+import { ReferralPartnerId } from "./ReferralPartnerId"
 
 export interface LeadProps {
-    referralPartner?: ReferralPartner;
-    referralOwner?: ReferralOwner;
-    client?: Client;
+    referralPartnerId?: ReferralPartnerId;
+    referralOwnerId?: ReferralOwnerId;
+    clientId?: ClientId;
+    projectId?: ProjectId;
     dateTime: Date;
-    project?: Project;
     status: LeadStatus;
 }
 
-export class Lead {
-    private id?: string;
-    private props: LeadProps
-
+export class Lead extends AggregateRoot<LeadProps>{
     get leadId(): LeadId {
-        return LeadId.create({ id: this.id })
+        return LeadId.create(this._id)
     }
+
+    public get ReferraPartnerId(): ReferralPartnerId | undefined {
+        return this.props.referralPartnerId;
+    }
+
+    public get ReferralOwnerId(): ReferralOwnerId | undefined {
+        return this.props.referralOwnerId
+    }
+
+    public get ClientId(): ClientId | undefined {
+        return this.props.clientId;
+    }
+
+    get projectId(): ProjectId | undefined {
+        return this.props.projectId
+    }
+
     get dateTime(): Date {
         return this.props.dateTime
-    }
-
-    get project(): Project | undefined {
-        return this.props.project
     }
 
     public get status(): LeadStatus {
@@ -34,13 +46,11 @@ export class Lead {
     }
 
 
-    private constructor(props: LeadProps, id?: string) {
-        this.props = props
-        this.id = id
-
+    private constructor(props: LeadProps, id?: UniqueEntityID) {
+        super(props, id)
     }
 
-    public static create(props: LeadProps, id?: string): Lead {
+    public static create(props: LeadProps, id?: UniqueEntityID): Lead {
         const lead = new Lead(props, id)
 
         return lead

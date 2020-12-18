@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/camelcase */
 import { Sequelize } from 'sequelize'
 
 const {

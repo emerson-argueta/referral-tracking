@@ -3,9 +3,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 import * as Sequelize from 'sequelize'
-import { MysqlConnection } from '../config/mysqlConfig';
+import { PostgresConnection } from '../config/postgresConfig';
 
-const sequelize = MysqlConnection;
+const sequelize = PostgresConnection;
 
 // turns base_user => BaseUser
 const toCamelCase = (str: string): string => {
@@ -30,7 +30,9 @@ const getAllModels = (): Array<typeof Sequelize.Model> => {
 
 export type TModels = { [modelName: string]: typeof Sequelize.Model | Sequelize.Sequelize | typeof Sequelize }
 let models: TModels
+// eslint-disable-next-line prefer-const
 let modelsLoaded = false;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const createModels = () => {
     if (modelsLoaded) return models;
 

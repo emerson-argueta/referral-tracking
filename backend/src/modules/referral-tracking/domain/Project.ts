@@ -1,4 +1,5 @@
-import { Client } from "./Client"
+import { Entity } from "../../../shared/domain/Entity"
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID"
 import { ClientId } from "./ClientId"
 import { ProjectId } from "./ProjectId"
 
@@ -8,20 +9,28 @@ export interface ProjectProps {
     title: string;
 }
 
-export class Project {
-    id?: string
-    props: ProjectProps
+export class Project extends Entity<ProjectProps> {
 
     get projectId(): ProjectId {
-        return ProjectId.create({ id: this.id })
+        return ProjectId.create(this._id)
+    }
+    get clientId(): ProjectId {
+        return this.props.clientId
     }
 
-    private constructor(props: ProjectProps) {
-        this.props = props
+    get estimate(): string {
+        return this.props.estimate
     }
 
-    public static create(props: ProjectProps): Project {
-        const project = new Project(props)
+    get title(): string {
+        return this.props.title
+    }
+    private constructor(props: ProjectProps, id?: UniqueEntityID) {
+        super(props, id);
+    }
+
+    public static create(props: ProjectProps, id?: UniqueEntityID): Project {
+        const project = new Project(props, id)
         return project
     }
 }

@@ -1,17 +1,18 @@
+import { AggregateRoot } from "../../../shared/domain/AggregateRoot";
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 import { Lead } from "./Lead";
 import { ReferralPartnerId } from "./ReferralPartnerId"
 
 export interface ReferralPartnerProps {
     username: string;
-    leads?: Array<Lead>
+    leads?: Array<Lead>;
 }
 
-export class ReferralPartner {
-    private id?: string;
-    private props: ReferralPartnerProps
+export class ReferralPartner extends AggregateRoot<ReferralPartnerProps>  {
+
 
     get referralPartnerId(): ReferralPartnerId {
-        return ReferralPartnerId.create({ id: this.id })
+        return ReferralPartnerId.create(this._id)
     }
 
     get username(): string {
@@ -23,13 +24,12 @@ export class ReferralPartner {
         return this.props.leads
     }
 
-    private constructor(props: ReferralPartnerProps, id?: string) {
-        this.props = props
-        this.id = id
+    private constructor(props: ReferralPartnerProps, id?: UniqueEntityID) {
+        super(props, id)
     }
 
-    public static create(props: ReferralPartnerProps, id?: string): ReferralPartner {
-        const referralPartner = new ReferralPartner(props)
+    public static create(props: ReferralPartnerProps, id?: UniqueEntityID): ReferralPartner {
+        const referralPartner = new ReferralPartner(props, id)
 
         return referralPartner
 

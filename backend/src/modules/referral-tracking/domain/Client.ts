@@ -1,20 +1,20 @@
+import { AggregateRoot } from "../../../shared/domain/AggregateRoot";
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 import { ClientId } from "./ClientId";
 import { Project } from "./Project";
 
 export interface ClientProps {
     name: string;
-    email: string
-    projects?: Array<Project>
+    email: string;
+    projects?: Array<Project>;
 }
 
 
 
-export class Client {
-    private id?: string;
-    private props: ClientProps
+export class Client extends AggregateRoot<ClientProps>{
 
     get clientId(): ClientId {
-        return ClientId.create({ id: this.id })
+        return ClientId.create(this._id)
     }
     get email(): string {
         return this.props.email
@@ -25,12 +25,11 @@ export class Client {
     }
 
 
-    private constructor(props: ClientProps, id?: string) {
-        this.props = props
-        this.id = id
+    private constructor(props: ClientProps, id?: UniqueEntityID) {
+        super(props, id)
     }
 
-    public static create(props: ClientProps, id?: string): Client {
+    public static create(props: ClientProps, id?: UniqueEntityID): Client {
         const client = new Client(props, id)
 
         return client

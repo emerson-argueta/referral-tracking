@@ -1,18 +1,19 @@
-export interface ReferralOwnerIdProps {
-    id?: string | number
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Entity } from "../../../shared/domain/Entity";
+import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 
-export class ReferralOwnerId {
-    props: ReferralOwnerIdProps;
 
-    private constructor(props: ReferralOwnerIdProps) {
-        this.props = props
+export class ReferralOwnerId extends Entity<any> {
+    get id(): UniqueEntityID {
+        return this._id;
     }
 
-    public static create(props: ReferralOwnerIdProps) {
-        const referralOwnerId = new ReferralOwnerId(props)
+    private constructor(id?: UniqueEntityID) {
+        super(null, id)
+    }
 
-        return referralOwnerId
+    public static create(id?: UniqueEntityID): ReferralOwnerId {
+        return new ReferralOwnerId(id);
     }
 
 }
