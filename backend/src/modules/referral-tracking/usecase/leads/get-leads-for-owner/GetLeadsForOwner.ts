@@ -26,19 +26,11 @@ export class GetLeadsForOwner {
     }
 
     async execute(dto: GetLeadsForOwnerDTO): Promise<GetLeadsForOwnerResult> {
-        const referralOwnerId = ReferralOwnerId.create(new UniqueEntityID(dto.referralOwnerId))
-
-        const leads = await this.leadRepo.findLeadsByOwnerId(referralOwnerId)
+        const leads = await this.leadRepo.findLeadsByOwnerUsername(dto.referralOwnerUsername)
 
         const promises = leads.map(async lead => {
             const project = await this.projectRepo.getProjectById(lead.projectId)
             const client = await this.clientRepo.getClientById(lead.ClientId)
-
-            console.log("this is what should be sent ---->", {
-                project: project,
-                lead: lead,
-                client: client
-            });
 
             return {
                 project: project,

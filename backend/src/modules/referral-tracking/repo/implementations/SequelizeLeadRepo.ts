@@ -24,11 +24,11 @@ export class LeadRepo implements ILeadRepo {
             where: {},
         }
     }
-    async findLeadsByOwnerId(referralOwnerId: ReferralOwnerId): Promise<Array<Lead>> {
+    async findLeadsByOwnerUsername(referralOwnerUsername: string): Promise<Array<Lead>> {
 
         const leadProps: LeadProps = {
             referralPartnerId: ReferralPartnerId.create(new UniqueEntityID("RANDOM_UUID_FOR_REFERRAL_PARTNER")),
-            referralOwnerId: referralOwnerId,
+            referralOwnerId: ReferralOwnerId.create(new UniqueEntityID("RANDOM_UUID_FOR_REFERRAL_OWNER")),
             clientId: ClientId.create(new UniqueEntityID("RANDOM_UUID_FOR_CLIENT")),
             projectId: ProjectId.create(new UniqueEntityID("RANDOM_UUID_FOR_PROJECT")),
             dateTime: new Date(),

@@ -1,10 +1,9 @@
 import express from "express";
-import Lead from "../../../../../shared/infrastructure/database/sequelize/models/Lead";
 import { ClientMapper } from "../../../mapper/ClientMapper";
 import { LeadMapper } from "../../../mapper/LeadMapper";
 import { ProjectMapper } from "../../../mapper/ProjectMapper";
 import { GetLeadsForOwner } from "./GetLeadsForOwner";
-import { GetLeadsForOwnerDTO } from "./GetLeadsForOwnerDTO";
+import { GetLeadsForOwnerDTO, OwnerLeadsDTO } from "./GetLeadsForOwnerDTO";
 import { GetLeadsForOwnerErrors } from "./GetLeadsForOwnerErrors";
 
 
@@ -17,22 +16,28 @@ export class GetLeadsForOwnerController {
 
     async execute(req: express.Request, res: express.Response): Promise<any> {
         const dto: GetLeadsForOwnerDTO = {
-            referralOwnerId: req.query.referralOwnerId.toString(),
+            referralOwnerUsername: req.query.referralOwnerUsername.toString(),
         }
 
 
         try {
             console.log("this is the dto", dto)
             const result = await this.useCase.execute(dto);
-            res.type('application/json')
-            return res.status(200).json(result.map(r => {
+
+            const mappedLeads = result.map(r => {
                 return {
                     lead: LeadMapper.toDTO(r.lead),
                     project: ProjectMapper.toDTO(r.project),
                     client: ClientMapper.toDTO(r.client)
                 }
 
-            }))
+            })
+            const resBody: OwnerLeadsDTO = {
+                leads: mappedLeads
+            }
+
+            res.type('application/json')
+            return res.status(200).json(resBody)
 
             //return res.sendStatus(200);
         } catch (error) {

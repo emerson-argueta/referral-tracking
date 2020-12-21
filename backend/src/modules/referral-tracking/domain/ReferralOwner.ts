@@ -3,9 +3,9 @@ import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
 import { Lead } from "./Lead";
 import { ReferralOwnerId } from "./ReferralOwnerId"
 
-interface ReferralOwnerProps {
+export interface ReferralOwnerProps {
     username: string;
-    leads: Array<Lead>;
+    leads?: Array<Lead>;
 }
 
 export class ReferralOwner extends AggregateRoot<ReferralOwnerProps>{
