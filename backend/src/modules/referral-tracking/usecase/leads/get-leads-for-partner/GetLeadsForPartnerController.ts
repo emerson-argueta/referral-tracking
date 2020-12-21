@@ -1,28 +1,28 @@
 import express from "express";
+import { Client } from "../../../../../shared/infrastructure/database/sequelize/models/Client";
+import { DecodedExpressRequest } from "../../../../users/infrastructure/http/models/DecodedExpressRequest";
 import { ClientMapper } from "../../../mapper/ClientMapper";
 import { LeadMapper } from "../../../mapper/LeadMapper";
 import { ProjectMapper } from "../../../mapper/ProjectMapper";
-import { GetLeadsForOwner } from "./GetLeadsForOwner";
-import { GetLeadsForOwnerDTO, OwnerLeadsDTO } from "./GetLeadsForOwnerDTO";
-import { GetLeadsForOwnerErrors } from "./GetLeadsForOwnerErrors";
+import { GetLeadsForPartner } from "./GetLeadsforPartner";
+import { GetLeadsForPartnerDTO, PartnerLeadsDTO } from "./GetLeadsForPartnerDTO";
+import { GetLeadsForPartnerErrors } from "./GetLeadsForPartnerErrors";
 
 
-export class GetLeadsForOwnerController {
-    private useCase: GetLeadsForOwner;
+export class GetLeadsForPartnerController {
+    private useCase: GetLeadsForPartner;
 
-    constructor(useCase: GetLeadsForOwner) {
+    constructor(useCase: GetLeadsForPartner) {
         this.useCase = useCase;
     }
 
     async execute(req: express.Request, res: express.Response): Promise<any> {
-        const dto: GetLeadsForOwnerDTO = {
-            referralOwnerUsername: req.query.referralOwnerUsername.toString(),
+        const dto: GetLeadsForPartnerDTO = {
+            referralPartnerUsername: req.query.referralPartnerUsername.toString(),
         }
 
-
         try {
-            console.log("this is the dto", dto)
-            const result = await this.useCase.execute(dto);
+            console.log("Here is the Referral Partner DTO", dto);
 
             const mappedLeads = result.map(r => {
                 return {
@@ -30,21 +30,17 @@ export class GetLeadsForOwnerController {
                     project: ProjectMapper.toDTO(r.project),
                     client: ClientMapper.toDTO(r.client)
                 }
-
             })
-            const resBody: OwnerLeadsDTO = {
+
+            const resBody: PartnerLeadsDTO = {
                 leads: mappedLeads
             }
 
             res.type('application/json')
             return res.status(200).json(resBody)
-
-            //return res.sendStatus(200);
         } catch (error) {
             switch (error) {
-                case typeof GetLeadsForOwnerErrors.ReferralOwnerDoesNotExist:
-                    // Conflict--> Indicates that the request could not be processed 
-                    // because of conflict in the current state of the resource
+                case typeof GetLeadsForPartnerErrors.ReferralPartnerDoesNotExist:
                     return res.sendStatus(409)
                 default:
                     break;

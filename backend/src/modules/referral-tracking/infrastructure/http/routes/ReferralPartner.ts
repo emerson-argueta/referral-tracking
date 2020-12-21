@@ -4,6 +4,8 @@ import { inputLeadController } from "../../../usecase/referral-partner/input-lea
 const referralPartnerRouter = express.Router();
 
 referralPartnerRouter.post('/lead', (req, res) => inputLeadController.execute(req, res))
+referralPartnerRouter.get('/', (req, res) => inputLeadController.execute(req, res))
+
 export {
     referralPartnerRouter
 }

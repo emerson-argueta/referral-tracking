@@ -37,6 +37,22 @@ export class LeadRepo implements ILeadRepo {
         const lead = Lead.create(leadProps)
         return await [lead, lead, lead]
     }
+
+    async findLeadsByPartnerUsername(referralPartnerUsername: string): Promise<Array<Lead>> {
+
+        const leadProps: LeadProps = {
+            referralPartnerId: ReferralPartnerId.create(new UniqueEntityID("RANDOM_UUID_FOR_REFERRAL_PARTNER")),
+            referralOwnerId: ReferralOwnerId.create(new UniqueEntityID("RANDOM_UUID_FOR_REFERRAL_OWNER")),
+            clientId: ClientId.create(new UniqueEntityID("RANDOM_UUID_FOR_CLIENT")),
+            projectId: ProjectId.create(new UniqueEntityID("RANDOM_UUID_FOR_PROJECT")),
+            dateTime: new Date(),
+            status: "open",
+        }
+        const lead = Lead.create(leadProps)
+        return await [lead, lead, lead]
+    }
+
+    
     async findLead(uniqueLeadProps: IUniqueLead): Promise<Lead> {
         // const LeadModel = this.models.Lead as any
 

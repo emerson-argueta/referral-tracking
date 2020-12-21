@@ -6,4 +6,5 @@ export interface ILeadRepo {
     findLead(lead: IUniqueLead): Promise<Lead>;
     save(lead: Lead): Promise<void>;
     findLeadsByOwnerUsername(referralOwnerUsername: string): Promise<Array<Lead>>;
+    findLeadsByPartnerUsername(referralPartnerUsername: string): Promise<Array<Lead>>;
 }
