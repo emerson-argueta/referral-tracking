@@ -1,20 +1,20 @@
 import React, { Fragment } from 'react'
+import { ReferralOwnerLead } from './types/Leads'
 
 interface LeadRowProps {
-    lead: any
+    lead: ReferralOwnerLead
 }
 export const LeadRow = (props: LeadRowProps) => {
-    const leadTitle = props.lead.title
-    const leadEstimate = props.lead.estimate
-    const customerContact = props.lead.customerEmail
 
 
     return (
         <Fragment>
             <tr>
-                <td>{leadTitle}</td>
-                <td>{leadEstimate}</td>
-                <td>{customerContact}</td>
+                {Object.getOwnPropertyNames(props.lead).map(propertyName => {
+                    const leadWithForcedType: { [index: string]: { [index: string]: string } } = props.lead as any
+                    const vals = Object.values(leadWithForcedType[propertyName])
+                    return vals.map(v => (<td>{v}</td>))
+                }).flat()}
             </tr>
         </Fragment>
     )
