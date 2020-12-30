@@ -11,4 +11,18 @@ export interface IGetLeadsForReferralOwner {
     error?: any
 }
 
+export const GET_ALL_REFERRAL_OWNERS_FAIL = "RFO_GET_ALL_REFERRAL_OWNERS_FAIL"
+export const GET_ALL_REFERRAL_OWNERS_SUCCESS = "RFO_GET_ALL_REFERRAL_OWNERS_SUCCESS"
+
+//Questions regarding interface below:
+// How do we know the payload's props?
+export interface IGetAllReferralOwners {
+    type: typeof GET_ALL_REFERRAL_OWNERS_FAIL | typeof GET_ALL_REFERRAL_OWNERS_SUCCESS
+    payload?: {
+        referralOwnerUsername: string
+    }
+    error?: any
+}
+
 export type TReferralPartnerPage = IGetLeadsForReferralOwner
+export type TReferralOwnerPage = IGetAllReferralOwners
