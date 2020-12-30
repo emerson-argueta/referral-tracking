@@ -3,6 +3,7 @@ import { Leads } from './referral-partner-page/filterable-referral-owner-table/t
 import { ReferralOwners } from './referral-partner-page/filterable-referral-owner-table/types/ReferralOwners'
 import { FilterableReferralOwnerTable } from './referral-partner-page/FilterableReferralOwnerTable'
 import { NewLead } from './referral-partner-page/NewLead'
+import { ReferralPartnerPageProvider } from './referral-partner-page/state/ReferralPartnerPageContext'
 
 const MOCK_LEADS: Leads =
     [
@@ -38,14 +39,16 @@ export const ReferralPartnerPage = () => {
 
 
     return (
-        <Fragment>
-            <div style={{ width: '30%', margin: '10px' }}>
-                <FilterableReferralOwnerTable referralOwners={MOCK_REFERRAL_OWNERS} leads={MOCK_LEADS} />
-            </div>
-            <div>
-                <NewLead referralOwnerName='test' />
-            </div>
+        <ReferralPartnerPageProvider>
+            <Fragment>
+                <div style={{ width: '30%', margin: '10px' }}>
+                    <FilterableReferralOwnerTable referralOwners={MOCK_REFERRAL_OWNERS} leads={MOCK_LEADS} />
+                </div>
+                <div>
+                    <NewLead referralOwnerName='test' />
+                </div>
 
-        </Fragment>
+            </Fragment>
+        </ReferralPartnerPageProvider>
     )
 }

@@ -4,23 +4,21 @@ import { Leads } from './types/Leads'
 
 
 interface LeadTableProps {
-    leads: Leads
+    leads?: Leads
 }
 
 export const LeadTable = (props: LeadTableProps) => {
 
     let rows: Array<JSX.Element> = []
 
-    props.leads.forEach((lead) => {
+    props.leads && props.leads.forEach((lead) => {
         const leadRow = (<LeadRow lead={lead} />)
         rows.push(leadRow)
     })
 
-    const headerTitles = extractHeaderTitles(props.leads[0])
-    console.log(props.leads[0], headerTitles);
+    const headerTitles = props.leads && extractHeaderTitles(props.leads[0])
 
-
-    const tableHeader = (
+    const tableHeader = props.leads && headerTitles && (
         <thead>
             <tr>
                 {headerTitles.map(title => { return (<th>{title}</th>) })}

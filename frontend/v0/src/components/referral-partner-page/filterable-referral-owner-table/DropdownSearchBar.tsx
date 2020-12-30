@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { ReferralOwners } from './types/ReferralOwners';
+import { ReferralOwner, ReferralOwners } from './types/ReferralOwners';
 
 
 
 interface DropdownSearchBarProps {
     searchText: string
     referralOwners: ReferralOwners
+    handleGetLeadsForReferralOwner: (referralOwnerUsername: string) => void
 }
 
 export const DropdownSearchBar = (props: DropdownSearchBarProps) => {
@@ -15,7 +16,9 @@ export const DropdownSearchBar = (props: DropdownSearchBarProps) => {
         <Fragment>
             <form >
                 <Autocomplete
-                    onChange={(event, newValue) => { console.log(newValue) }}
+                    onChange={(event, newValue) => {
+                        newValue && props.handleGetLeadsForReferralOwner(newValue.username)
+                    }}
                     options={props.referralOwners}
                     id={'someId'}
                     getOptionLabel={(option) => option.username}
