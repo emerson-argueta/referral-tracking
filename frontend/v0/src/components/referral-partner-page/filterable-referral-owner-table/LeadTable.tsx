@@ -10,6 +10,7 @@ interface LeadTableProps {
 export const LeadTable = (props: LeadTableProps) => {
 
     let rows: Array<JSX.Element> = []
+    console.log('leads for the lead table===>', props.leads);
 
     props.leads && props.leads.forEach((lead) => {
         const leadRow = (<LeadRow lead={lead} />)

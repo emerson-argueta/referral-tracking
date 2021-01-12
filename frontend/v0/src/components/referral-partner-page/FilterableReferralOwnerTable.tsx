@@ -1,39 +1,53 @@
-import React from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { LeadTable } from './filterable-referral-owner-table/LeadTable'
 import { DropdownSearchBar } from './filterable-referral-owner-table/DropdownSearchBar'
 import { ReferralOwners } from './filterable-referral-owner-table/types/ReferralOwners'
 import { Leads } from './filterable-referral-owner-table/types/Leads'
 import { ReferralPartnerPage } from '../ReferralPartnerPage'
-import { getLeadsForReferralOwner } from './state/actions/ReferralPartnerPageActionCreators'
+import { getAllReferralOwners, getLeadsForReferralOwner, setSelectedReferralOwnerUsername } from './state/actions/ReferralPartnerPageActionCreators'
 import { useReferralPartnerPageContext } from './state/ReferralPartnerPageContext'
 
 interface FilterableReferralOwnerTableProps {
-    referralOwners: ReferralOwners
-    leads: Leads
-
+    referralOwners?: ReferralOwners
 }
 
 export const FilterableReferralOwnerTable = (props: FilterableReferralOwnerTableProps) => {
-
-    const referralOwners = props.referralOwners
-
+    // const referralOwners = props.referralOwners
     const [referralPartnerPageState, referralPartnerPageDispatch] = useReferralPartnerPageContext()
-    const { allLeads, selectedReferralOwnerUsername } = referralPartnerPageState
+    const { referralOwners, allLeads, selectedReferralOwnerUsername } = referralPartnerPageState
     const leads = selectedReferralOwnerUsername && allLeads && allLeads[selectedReferralOwnerUsername]
 
     const handleGetLeadsForReferralOwner = async (referralOwnerUsername: string) => {
         // call backend api to get leads for referral owner username
-        allLeads && referralPartnerPageDispatch(
+        referralPartnerPageDispatch(
             await getLeadsForReferralOwner(referralOwnerUsername, allLeads)
         )
 
     }
+    const handleSetSelectedReferralOwnerUsername = (referralOwnerUsername: string) => {
+        referralPartnerPageDispatch(
+            setSelectedReferralOwnerUsername(referralOwnerUsername)
+        )
+    }
+    const handleGetAllReferralOwners = async () => {
+        referralPartnerPageDispatch(
+            await getAllReferralOwners()
+        )
+    }
+    useEffect(() => {
+        handleGetAllReferralOwners()
+    }, [])
+
+
+    console.log('filterable referral owner table ', referralPartnerPageState);
+
     return (
         <div>
             <DropdownSearchBar
                 referralOwners={referralOwners}
                 searchText={''}
                 handleGetLeadsForReferralOwner={handleGetLeadsForReferralOwner}
+                handleSetSelectedReferralOwnerUsername={handleSetSelectedReferralOwnerUsername}
             />
             {leads && <LeadTable
                 leads={leads}

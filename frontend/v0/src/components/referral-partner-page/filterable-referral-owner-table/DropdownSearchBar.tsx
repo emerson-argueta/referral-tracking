@@ -7,8 +7,9 @@ import { ReferralOwner, ReferralOwners } from './types/ReferralOwners';
 
 interface DropdownSearchBarProps {
     searchText: string
-    referralOwners: ReferralOwners
+    referralOwners?: ReferralOwners
     handleGetLeadsForReferralOwner: (referralOwnerUsername: string) => void
+    handleSetSelectedReferralOwnerUsername: (referralOwnerUsername: string) => void
 }
 
 export const DropdownSearchBar = (props: DropdownSearchBarProps) => {
@@ -17,9 +18,11 @@ export const DropdownSearchBar = (props: DropdownSearchBarProps) => {
             <form >
                 <Autocomplete
                     onChange={(event, newValue) => {
+
                         newValue && props.handleGetLeadsForReferralOwner(newValue.username)
+                        newValue && props.handleSetSelectedReferralOwnerUsername(newValue.username)
                     }}
-                    options={props.referralOwners}
+                    options={props.referralOwners || []}
                     id={'someId'}
                     getOptionLabel={(option) => option.username}
                     renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}

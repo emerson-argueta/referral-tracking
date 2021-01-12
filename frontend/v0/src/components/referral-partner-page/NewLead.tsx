@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormTitle } from './new-lead/FormTitle'
 import { NewLeadForm } from './new-lead/NewLeadForm'
 
 interface NewLeadProps {
-    referralOwnerName : string 
+    referralOwnerName: string
 }
 
 
-export const NewLead = (props:NewLeadProps) => {
+export const NewLead = (props: NewLeadProps) => {
     const name = props.referralOwnerName
-    
+
     return (
         <div>
-            <FormTitle referralOwnerName={name}  />
+            <FormTitle referralOwnerName={name} />
             <NewLeadForm />
         </div>
     )

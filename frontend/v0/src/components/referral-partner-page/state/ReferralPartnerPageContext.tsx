@@ -7,17 +7,17 @@ export const ReferralPartnerPageDispatchContext = createContext<Dispatch<TReferr
 export const ReferralPartnerPageStateContext = createContext(initReferralPartnerPageState);
 
 export const useReferralPartnerPageContext = (): [IReferralPartnerPageState, Dispatch<TReferralPartnerPage>] => {
-    const authState = useContext(ReferralPartnerPageStateContext)
-    const authDispatch = useContext(ReferralPartnerPageDispatchContext)
-    return [authState, authDispatch]
+    const referralPartnerPageState = useContext(ReferralPartnerPageStateContext)
+    const referralPartnerPageDispatch = useContext(ReferralPartnerPageDispatchContext)
+    return [referralPartnerPageState, referralPartnerPageDispatch]
 }
 
 export const ReferralPartnerPageProvider = ({ children }: any) => {
-    const [authstate, authDispatch] = useReducer(ReferralPartnerPageReducer, initReferralPartnerPageState);
+    const [referralPartnerPagestate, referralPartnerPageDispatch] = useReducer(ReferralPartnerPageReducer, initReferralPartnerPageState);
 
     return (
-        <ReferralPartnerPageStateContext.Provider value={authstate}>
-            <ReferralPartnerPageDispatchContext.Provider value={authDispatch}>{children}</ReferralPartnerPageDispatchContext.Provider>
+        <ReferralPartnerPageStateContext.Provider value={referralPartnerPagestate}>
+            <ReferralPartnerPageDispatchContext.Provider value={referralPartnerPageDispatch}>{children}</ReferralPartnerPageDispatchContext.Provider>
         </ReferralPartnerPageStateContext.Provider>
     );
 }

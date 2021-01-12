@@ -5,17 +5,9 @@ export const initReferralPartnerPageState: IReferralPartnerPageState = {
 
 }
 
-//Needs fixing.
-export const initReferralOwnerPageState: IReferralOwnerPageState = {
-
-}
-
 export interface IReferralPartnerPageState {
     allLeads?: { [referralOwnerUserName: string]: Leads }
     selectedReferralOwnerUsername?: string
+    referralOwners?: ReferralOwners
     error?: any
-}
-
-export interface IReferralOwnerPageState {
-    ReferralOwnerUsername: ReferralOwners
 }
