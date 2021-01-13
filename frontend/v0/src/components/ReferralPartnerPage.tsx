@@ -42,10 +42,10 @@ export const ReferralPartnerPage = () => {
         <ReferralPartnerPageProvider>
             <Fragment>
                 <div style={{ width: '30%', margin: '10px' }}>
-                    <FilterableReferralOwnerTable referralOwners={MOCK_REFERRAL_OWNERS} />
+                    <FilterableReferralOwnerTable />
                 </div>
                 <div>
-                    <NewLead referralOwnerName='test' />
+                    <NewLead />
                 </div>
 
             </Fragment>

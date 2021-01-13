@@ -8,11 +8,9 @@ import { getAllReferralOwners, getLeadsForReferralOwner, setSelectedReferralOwne
 import { useReferralPartnerPageContext } from './state/ReferralPartnerPageContext'
 
 interface FilterableReferralOwnerTableProps {
-    referralOwners?: ReferralOwners
 }
 
 export const FilterableReferralOwnerTable = (props: FilterableReferralOwnerTableProps) => {
-    // const referralOwners = props.referralOwners
     const [referralPartnerPageState, referralPartnerPageDispatch] = useReferralPartnerPageContext()
     const { referralOwners, allLeads, selectedReferralOwnerUsername } = referralPartnerPageState
     const leads = selectedReferralOwnerUsername && allLeads && allLeads[selectedReferralOwnerUsername]
@@ -34,6 +32,7 @@ export const FilterableReferralOwnerTable = (props: FilterableReferralOwnerTable
             await getAllReferralOwners()
         )
     }
+
     useEffect(() => {
         handleGetAllReferralOwners()
     }, [])

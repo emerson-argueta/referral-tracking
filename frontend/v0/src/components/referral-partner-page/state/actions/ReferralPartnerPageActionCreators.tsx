@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from "axios"
 import { Leads } from "../../filterable-referral-owner-table/types/Leads"
 import { ReferralOwners } from "../../filterable-referral-owner-table/types/ReferralOwners"
-import { GET_LEADS_REFERRAL_OWNER_FAIL, GET_LEADS_REFERRAL_OWNER_SUCCESS, IGetAllReferralOwners, IGetLeadsForReferralOwner, GET_ALL_REFERRAL_OWNERS_FAIL, GET_ALL_REFERRAL_OWNERS_SUCCESS, ISetSelectedReferralOwnerUsername, SET_SELECTED_REFERRAL_OWNER_USERNAME } from "./ReferralPartnerPageActions"
+import { InputLead } from "../../new-lead/types/InputLead"
+import { GET_LEADS_REFERRAL_OWNER_FAIL, GET_LEADS_REFERRAL_OWNER_SUCCESS, IGetAllReferralOwners, IGetLeadsForReferralOwner, GET_ALL_REFERRAL_OWNERS_FAIL, GET_ALL_REFERRAL_OWNERS_SUCCESS, ISetSelectedReferralOwnerUsername, SET_SELECTED_REFERRAL_OWNER_USERNAME, IInputLead, INPUT_LEAD_SUCCESS, INPUT_LEAD_FAIL } from "./ReferralPartnerPageActions"
 
 export const getLeadsForReferralOwner = async (referralOwnerUsername: string, existingLeads?: { [referralOwnerUsername: string]: Leads }): Promise<IGetLeadsForReferralOwner> => {
     const url = '/api/v1/referralOwner/leads'
@@ -66,5 +67,24 @@ export const setSelectedReferralOwnerUsername = (referralOwnerUsername: string):
     return {
         type: SET_SELECTED_REFERRAL_OWNER_USERNAME,
         payload: referralOwnerUsername
+    }
+}
+
+export const inputLead = async (newLead: InputLead): Promise<IInputLead> => {
+    const url = '/api/v1/referralPartner/lead'
+
+    try {
+        const res: AxiosResponse<void> = await axios.post(url, newLead)
+        console.log('Input lead posted. Status: ', res.status)
+
+        return {
+            type: INPUT_LEAD_SUCCESS
+        }
+
+    } catch (error) {
+        return {
+            type: INPUT_LEAD_FAIL,
+            error: error?.response?.data?.error || ''
+        }
     }
 }

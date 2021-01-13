@@ -1,21 +1,49 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { InputLead } from './types/InputLead'
 
-export const NewLeadForm = () => {
-    
-    
+
+interface NewLeadFormProps {
+    handleInputLead: (newLead: InputLead) => void
+}
+export const NewLeadForm = (props: NewLeadFormProps) => {
+
+    const [formData, setFormData] = useState({} as { [key: string]: string })
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputID = e.target.id
+        const inputValue = e.target.value
+
+        const newFormData = {
+            ...formData,
+            [inputID]: inputValue
+        }
+        setFormData(newFormData)
+    }
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        const newLead: InputLead = {
+            projectTitle: formData?.projectTitle || '',
+            projectEstimate: formData?.projectEstimate || '',
+            clientName: formData?.clientName || '',
+            clientEmail: formData?.clientEmail || '',
+        }
+
+        props.handleInputLead(newLead)
+    }
+
     return (
         <Fragment>
-            <form>
-                <input type="text" placeholder='Client name' />
+            <form onSubmit={handleOnSubmit}>
+                <input id='clientName' onChange={handleOnChange} type="text" placeholder='Client name' />
                 <br></br>
-                <input type="text" placeholder='Client email' />
+                <input id='clientEmail' onChange={handleOnChange} type="text" placeholder='Client email' />
                 <br></br>
-                <input type="text" placeholder='Project title' />
+                <input id='projectTitle' onChange={handleOnChange} type="text" placeholder='Project title' />
                 <br></br>
-                <input type="number" placeholder='Estimate' />
+                <input id='projectEstimate' onChange={handleOnChange} type="number" placeholder='Estimate' />
                 <br></br>
                 <button>Submit</button>
-                
             </form>
 
         </Fragment>

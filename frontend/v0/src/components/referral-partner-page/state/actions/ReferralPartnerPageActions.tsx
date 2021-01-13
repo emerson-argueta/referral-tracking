@@ -31,4 +31,11 @@ export interface ISetSelectedReferralOwnerUsername {
     payload: string
 }
 
-export type TReferralPartnerPage = IGetLeadsForReferralOwner | IGetAllReferralOwners | ISetSelectedReferralOwnerUsername
+export const INPUT_LEAD_FAIL = 'RFP_INPUT_LEAD_FAIL'
+export const INPUT_LEAD_SUCCESS = 'RFP_INPUT_LEAD_SUCCESS'
+export interface IInputLead {
+    type: typeof INPUT_LEAD_SUCCESS | typeof INPUT_LEAD_FAIL
+    error?: any
+}
+
+export type TReferralPartnerPage = IGetLeadsForReferralOwner | IGetAllReferralOwners | ISetSelectedReferralOwnerUsername | IInputLead
